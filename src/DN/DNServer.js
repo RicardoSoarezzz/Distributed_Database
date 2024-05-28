@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const SystemLog = require("./SystemLog");
-const { callcfg, electMaster, logger } = require("RP/myUtils");
+const { callcfg, electMaster, logger } = require("../RP/myUtils");
 
 const app = express();
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
-const logFilePath = `path/to/dn_${PORT}.log`;
+const logFilePath = `C:\\Users\\geral\\SD_GRUPO4\\log\\combined.log`;
 const systemLog = new SystemLog(logFilePath);
 
 let isMaster = false;

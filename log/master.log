@@ -16,3 +16,4 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
 error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
 {"level":"info","message":{"currentTerm":20,"id":3,"name":"N1s0","state":"Leader","votedFor":8,"votesReceived":15},"timestamp":"2024-05-28 17:29:37"}
+{"level":"info","message":{"currentTerm":15,"id":1,"name":"N0s1","state":"Leader","votedFor":5,"votesReceived":15},"timestamp":"2024-05-28 17:52:44"}
