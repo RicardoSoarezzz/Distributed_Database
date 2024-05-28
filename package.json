@@ -1,0 +1,22 @@
+{
+	"name": "sd-grupo-4",
+	"version": "1.0.0",
+	"description": "Node.js Distributed Database System",
+	"dependencies": {
+		"axios": "^1.6.8",
+		"express": "^4.19.2",
+		"forever": "^4.0.3",
+		"fs": "^0.0.1-security",
+		"request": "^2.88.2",
+		"uuid": "^9.0.1",
+		"winston": "^3.13.0"
+	},
+	"scripts": {
+		"startMaster": "node master.js",
+		"startSlave": "node slave.js",
+		"startReverseProxy": "node src/RP/ReverseProxy.js",
+		"start": "npm run startReverseProxy && npm run startMaster && npm run startSlave",
+		"stop": "forever stopall",
+		"restart": "npm run stop && npm run start"
+	}
+}

@@ -1,0 +1,18 @@
+{"level":"info","message":{"host":"localhost","id":2,"name":"N2s2","port":3220},"timestamp":"2024-05-28 12:55:54"}
+{"level":"info","message":{"host":"localhost","id":2,"name":"N0s2","port":3020},"timestamp":"2024-05-28 12:56:00"}
+{"level":"info","message":{"host":"localhost","id":0,"name":"N2s0","port":3200},"timestamp":"2024-05-28 12:56:01"}
+{"level":"info","message":{"host":"localhost","id":1,"name":"N2s1","port":3210},"timestamp":"2024-05-28 12:56:02"}
+{"level":"info","message":{"host":"localhost","id":0,"name":"N1s0","port":3100},"timestamp":"2024-05-28 12:56:05"}
+{"level":"info","message":{"host":"localhost","id":1,"name":"N1s1","port":3110},"timestamp":"2024-05-28 12:56:15"}
+{"level":"info","message":{"host":"localhost","id":1,"name":"N1s1","port":3110},"timestamp":"2024-05-28 12:56:16"}
+{"level":"info","message":{"host":"localhost","id":2,"name":"N0s2","port":3020},"timestamp":"2024-05-28 12:56:16"}
+{"level":"info","message":{"host":"localhost","id":1,"name":"N2s1","port":3210},"timestamp":"2024-05-28 12:59:21"}
+{"level":"info","timestamp":"2024-05-28 16:38:13"}
+{"level":"info","timestamp":"2024-05-28 16:38:16"}
+{"level":"info","timestamp":"2024-05-28 16:39:41"}
+{"level":"info","message":{"currentTerm":14,"id":7,"name":"N2s1","state":"Leader","votedFor":8,"votesReceived":11},"timestamp":"2024-05-28 17:25:24"}
+error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:48"}
+error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:56"}
+error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
+error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
+{"level":"info","message":{"currentTerm":20,"id":3,"name":"N1s0","state":"Leader","votedFor":8,"votesReceived":15},"timestamp":"2024-05-28 17:29:37"}
