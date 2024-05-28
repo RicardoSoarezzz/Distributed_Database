@@ -54,7 +54,7 @@ class Server {
 			(this.votedFor === null || this.votedFor === candidateId) &&
 			term === this.currentTerm
 		) {
-			console.log(`Server ${this.name} voted for server`);
+			console.log(`Server ${this.name} voted for`);
 			this.votedFor = candidateId;
 			return true;
 		}

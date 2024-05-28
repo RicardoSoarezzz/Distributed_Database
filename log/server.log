@@ -61,3 +61,4 @@
 {"timestamp":"2024-05-28T09:43:24.917Z","message":"Starting the system... ","type":"info"}
 {"timestamp":"2024-05-28T09:45:58.075Z","message":"Starting the system... ","type":"info"}
 {"level":"info","message":"Server started on port 4000","timestamp":"2024-05-28 17:29:24"}
+{"level":"info","message":"Server started on port 4000","timestamp":"2024-05-28 17:42:30"}
