@@ -31,3 +31,5 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:56"}
 error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
 error: Error processing status request {"error":{},"path":"/status","timestamp":"2024-05-28 12:18:57"}
+{"level":"error","message":"Converting circular structure to JSON\n    --> starting at object with constructor 'Server'\n    |     property '_events' -> object with constructor 'Events'\n    |     property 'term change' -> object with constructor 'EE'\n    --- property 'context' closes the circle","timestamp":"2024-05-28 21:05:33"}
+{"level":"error","message":"Converting circular structure to JSON\n    --> starting at object with constructor 'Server'\n    |     property '_events' -> object with constructor 'Events'\n    |     property 'term change' -> object with constructor 'EE'\n    --- property 'context' closes the circle","timestamp":"2024-05-28 21:05:41"}
