@@ -17,7 +17,7 @@ class Server {
 		this.currentTerm = 0;
 		this.votedFor = null;
 		this.votesReceived = 0;
-		//this.log = logs;
+		this.log = null;
 	}
 
 	startElection() {
@@ -26,6 +26,10 @@ class Server {
 			this.state = STATES.CANDIDATE;
 			this.currentTerm++;
 			this.votedFor = this.id;
+			this.log = logs.addEntry(
+				`Server ${this.name} started an election`,
+				"info"
+			);
 			return this.requestVotes();
 		}
 		return null;
@@ -44,10 +48,15 @@ class Server {
 					if (voteGranted) {
 						this.votesReceived++;
 					}
+				} else {
+					this.votesReceived--;
 				}
 			}
 		});
-		return this.votesReceived; // Return the total votes received
+		this.log =
+			this.log +
+			logs.addEntry(`Server ${this.name} got: ${this.votesReceived} votes`);
+		return this.votesReceived;
 	}
 
 	receiveVoteRequest(term, candidateId) {
