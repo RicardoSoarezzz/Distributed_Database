@@ -1,4 +1,5 @@
 const systemLoger = require("../DN/SystemLog");
+
 const STATES = {
 	FOLLOWER: "Follower",
 	CANDIDATE: "Candidate",
@@ -7,6 +8,7 @@ const STATES = {
 
 const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
 const logs = new systemLoger(logFilePath);
+
 class Server {
 	constructor(name, id) {
 		this.name = name;
@@ -15,7 +17,7 @@ class Server {
 		this.currentTerm = 0;
 		this.votedFor = null;
 		this.votesReceived = 0;
-		this.log = logs;
+		//this.log = logs;
 	}
 
 	startElection() {
@@ -93,8 +95,6 @@ function electMaster(cfg) {
 		electedLeader = servers[0];
 	}
 
-	console.log("SERVERS: ");
-	console.log(servers);
 	electedLeader.state = STATES.LEADER;
 	console.log("\n\nElected leader:", electedLeader.name);
 	return electedLeader;
