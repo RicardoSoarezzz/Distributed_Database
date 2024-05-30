@@ -89,3 +89,4 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-05-30 13:18:12"}
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-05-30 13:18:29"}
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-05-30 15:43:46"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2024-05-30 16:37:07"}

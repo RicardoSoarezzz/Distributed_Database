@@ -29,7 +29,18 @@ app.get("/status", (req, res) => {
 });
 
 app.get("/stats", (req, res) => {
-	res.json({ stats: "Statistics data" });
+	const stats = {
+		uptime: process.uptime(),
+		message: "DN stats",
+		timestamp: Date.now(),
+	};
+	res.json(stats);
+});
+
+app.post("/admin/loglevel", (req, res) => {
+	const newLogLevel = req.body.level;
+	systemLog.info(newLogLevel);
+	res.json({ loglevel: newLogLevel });
 });
 
 app.post("/admin/loglevel", (req, res) => {
