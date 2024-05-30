@@ -5,7 +5,7 @@ const systemLoger = require("../DN/SystemLog");
 const app = express();
 const PORT = 4000;
 
-let masterNode = null;
+masterNode = null;
 
 const { getStatus, callcfg, electMaster } = require("./myUtils");
 const e = require("express");

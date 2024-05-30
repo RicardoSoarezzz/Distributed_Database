@@ -1,142 +1,118 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const SystemLog = require("./SystemLog");
+const DataBase = require("../NM/DataBase.js");
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
 
 const app = express();
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3500;
-const logFilePath = `C:\\Users\\geral\\SD_GRUPO4\\log\\combined.log`;
+const PORT = process.env.PORT || 2000;
+const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 const systemLog = new SystemLog(logFilePath);
+const db = new DataBase();
 
-let isMaster = false;
-let db = {};
+let masterPort = 3000;
+
+// Middleware to check if the server is master
+const checkIfMaster = (req, res, next) => {
+	if (req.socket.localPort === masterPort) {
+		next();
+	} else {
+		res.status(403).json({ error: "Only master can perform this operation" });
+	}
+};
 
 // Common endpoints
 app.get("/status", (req, res) => {
-    res.json({ status: "DN is running", master: isMaster });
+	res.json({ status: "DN is running", master: isMaster });
 });
 
 app.get("/stats", (req, res) => {
-    res.json({ stats: "Statistics data" });
+	res.json({ stats: "Statistics data" });
 });
 
 app.post("/admin/loglevel", (req, res) => {
-    const level = req.body.level;
-    logger.level = level;
-    res.json({ loglevel: logger.level });
+	const level = req.body.level;
+	logger.level = level;
+	res.json({ loglevel: logger.level });
 });
 
-// DB endpoints
-app.post("/db/c", (req, res) => {
-    const { key, value } = req.body;
-    db[key] = value;
-    res.json({ message: "Created", key, value });
+// DB endpoints with middleware to check if the server is master
+app.post("/db/c", checkIfMaster, (req, res) => {
+	const { key, value } = req.body;
+	const result = db.create(key, value);
+	res.json(result);
+});
+
+app.put("/db/u", checkIfMaster, (req, res) => {
+	const { key, value } = req.body;
+	const result = db.update(key, value);
+	res.json(result);
+});
+
+app.delete("/db/d", checkIfMaster, (req, res) => {
+	const { key } = req.body;
+	const result = db.delete(key);
+	res.json(result);
 });
 
 app.get("/db/r", (req, res) => {
-    const { key } = req.query;
-    const value = db[key];
-    if (value) {
-        res.json({ key, value });
-    } else {
-        res.status(404).json({ error: "Key not found" });
-    }
-});
-
-app.put("/db/u", (req, res) => {
-    const { key, value } = req.body;
-    if (db[key]) {
-        db[key] = value;
-        res.json({ message: "Updated", key, value });
-    } else {
-        res.status(404).json({ error: "Key not found" });
-    }
-});
-
-app.delete("/db/d", (req, res) => {
-    const { key } = req.body;
-    if (db[key]) {
-        delete db[key];
-        res.json({ message: "Deleted", key });
-    } else {
-        res.status(404).json({ error: "Key not found" });
-    }
+	const { key } = req.query;
+	const result = db.read(key);
+	res.json(result);
 });
 
 app.get("/stop", (req, res) => {
-    res.json({ message: "Stopping DN" });
-    process.exit(0);
+	res.json({ message: "Stopping DN" });
+	process.exit(0);
 });
 
 // DN-specific endpoints
 app.post("/election", (req, res) => {
-    const cfg = callcfg();
-    const master = electMaster(cfg);
-    if (master.port === PORT) {
-        isMaster = true;
-    }
-    res.json(master);
+	const cfg = callcfg();
+	const master = electMaster(cfg);
+	if (master.port === PORT) {
+		isMaster = true;
+	}
+	res.json(master);
 });
 
 app.post("/maintenance", (req, res) => {
-    // Implement maintenance logic
-    res.json({ message: "Maintenance data synchronized" });
-});
-
-// Start each node's server
-const startNodeServers = () => {
-    const cfg = callcfg();
-    cfg.DNs.forEach((dn) => {
-        dn.servers.forEach((server) => {
-            const serverApp = express();
-            serverApp.use(bodyParser.json());
-
-            // Set up DN-specific endpoints for each server
-            serverApp.post("/election", (req, res) => {
-                // Implement election logic for each node server
-                const master = electMaster(cfg);
-                if (master.port === server.port) {
-                    isMaster = true;
-                }
-                res.json(master);
-            });
-
-            serverApp.post("/maintenance", (req, res) => {
-                // Implement maintenance logic for each node server
-                res.json({ message: "Maintenance data synchronized" });
-            });
-
-            serverApp.listen(server.port, () => {
-                console.log(`Node server ${server.name} started on port ${server.port}`);
-            });
-        });
-    });
-};
-
-// Call the function to start node servers
-startNodeServers();
-
-// Root route handler with integrated HTML buttons
-app.get("/", (req, res) => {
-    res.send(`
-        <div style="text-align: center;">
-            <br><br><br>
-            <h1>Node.js - Distributed DB - Grupo 4</h1>
-            <h2>Reverse Proxy</h2>
-            <p>Ricardo Soares | Miguel Moreira</p>
-            <button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/status'">Check Status (/status)</button>
-            <button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/election'">Elect Master (/election)</button>
-            <button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/stop'">Stop Server (/stop)</button>
-        </div>
-    `);
+	// Implement maintenance logic
+	res.json({ message: "Maintenance data synchronized" });
 });
 
 // Start the server
 app.listen(PORT, () => {
-    systemLog.addEntry(`DN server started on port ${PORT}`);
-    console.log(`DN server started on port ${PORT}`);
+	systemLog.addEntry(`DN server started on port ${PORT}`);
+	console.log(`DN server started on port ${PORT}`);
 });
 
 module.exports = app;
+
+// Start each node's server
+const startNodeServers = () => {
+	const cfg = callcfg();
+	cfg.DNs.forEach((dn) => {
+		dn.servers.forEach((server) => {
+			app.use(bodyParser.json());
+			if (server.port == 3000) {
+				masterPort = server.port;
+			}
+			app.post("/maintenance", (req, res) => {
+				// Implement maintenance logic for each node server
+				res.json({ message: "Maintenance data synchronized" });
+			});
+
+			app.listen(server.port, () => {
+				console.log(
+					`Node server ${server.name} started on port ${server.port}`
+				);
+			});
+		});
+	});
+};
+
+// Call the function to start node servers
+startNodeServers();
