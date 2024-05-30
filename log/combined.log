@@ -56,3 +56,5 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"info","message":"DN server started on port 2000","timestamp":"2024-05-30 11:47:41"}
 {"level":"info","message":"DN server started on port 2000","timestamp":"2024-05-30 11:49:58"}
 {"level":"info","message":"DN server started on port 2000","timestamp":"2024-05-30 13:14:44"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-05-30 13:30:25"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-05-30 15:42:56"}

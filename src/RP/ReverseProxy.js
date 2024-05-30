@@ -44,14 +44,14 @@ app.get("/", (req, res) => {
 	<h1>Node.js - Distributed DB - Grupo 4</h1>
 	<h2>Reverse Proxy</h2>
 	<p>Ricardo Soares | Miguel Moreira</p>
-	<button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/status'">Check Status (/status)</button>
+	<button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/stat'">Check Status (/status)</button>
 	<button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/master_node'">Check Master Node (/master_node)</button>
 	<button style="margin: 10px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/setMaster'">Elect new Master (/setMaster)</button>
 </div>
     `);
 });
 
-app.get("/status", async (req, res) => {
+app.get("/stats", async (req, res) => {
 	try {
 		const status = await getStatus(startTime);
 		systemLogs.info(status);
