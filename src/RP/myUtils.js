@@ -29,6 +29,7 @@ function getStatus(startTime) {
 	const status = {
 		status: "OK",
 		uptime: uptime,
+		masterNode: masterNode,
 	};
 	return status;
 }

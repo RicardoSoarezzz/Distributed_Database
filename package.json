@@ -15,9 +15,9 @@
 	"scripts": {
 		"startMaster": "node master.js",
 		"startSlave": "node slave.js",
-		"startNodes": "node src/DN/DNServer.js",
+		"startNodes": "node C:/Users/geral/SD_GRUPO4/src/DN/DNServer.js",
 		"startReverseProxy": "node src/RP/ReverseProxy.js",
-		"start": "npm run startReverseProxy && npm run startMaster && npm run startSlave",
+		"start": "npm run startReverseProxy && npm run startNodes",
 		"stop": "forever stopall",
 		"restart": "npm run stop && npm run start"
 	}

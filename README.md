@@ -45,7 +45,7 @@ This project is a Node.js application for a distributed database system called u
 
 ## Create a key-value pair
 
-curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"1\", \"value\":{\"name\":\"Ricardo\", \"phone\":\"21312\", \"email\":\"ex@exmail.com\"}}" http:/ localhost:3000/db/c
+curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"2\", \"value\":{\"name\":\"oieanro\", \"phone\":\"192h391\", \"email\":\"eoduanx@exmail.com\"}}" http:/ localhost:3000/db/c
 
 ## Get a key-value pair
 
@@ -57,4 +57,4 @@ curl -X PUT \ -H "Content-Type: application/json" \ -d "{\"key\":\"1\", \"value\
 
 ## Delete a key-value pair
 
-curl -X DELETE \ -H "Content-Type: application/json" \ -d "{\"key\":\"2\"}" \ http://localhost:3000/db/d
+curl -X DELETE \ -H "Content-Type: application/json" \ -d "{\"key\":\"1\"}" \ http://localhost:3000/db/d
