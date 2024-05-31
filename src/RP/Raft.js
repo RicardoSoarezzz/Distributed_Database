@@ -10,7 +10,7 @@ const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
 const logs = new systemLoger(logFilePath);
 
 class Server {
-	constructor(name, id) {
+	constructor(name, id, port) {
 		this.name = name;
 		this.id = id;
 		this.state = STATES.FOLLOWER;
@@ -18,6 +18,7 @@ class Server {
 		this.votedFor = null;
 		this.votesReceived = 0;
 		this.log = null;
+		this.port = port;
 	}
 
 	startElection() {
@@ -84,7 +85,7 @@ function electMaster(cfg) {
 
 	cfg.DNs.forEach((DN) => {
 		DN.servers.forEach((server) => {
-			servers.push(new Server(server.name, server.id));
+			servers.push(new Server(server.name, server.id, server.port));
 		});
 	});
 

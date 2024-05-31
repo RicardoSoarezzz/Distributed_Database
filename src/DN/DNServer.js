@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const SystemLog = require("./SystemLog");
 const DataBase = require("../NM/DataBase.js");
+
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
 
 const app = express();
@@ -11,8 +12,6 @@ const PORT = process.env.PORT || 2000;
 const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 const systemLog = new SystemLog(logFilePath);
 const db = new DataBase();
-
-let masterPort = 3000;
 
 // Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
