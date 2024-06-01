@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const SystemLog = require("./SystemLog");
 const DataBase = require("../NM/DataBase.js");
-
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
 
 const app = express();

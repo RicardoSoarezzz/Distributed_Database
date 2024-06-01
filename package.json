@@ -13,11 +13,7 @@
 		"winston": "^3.13.0"
 	},
 	"scripts": {
-		"startMaster": "node master.js",
-		"startSlave": "node slave.js",
-		"startNodes": "node C:/Users/geral/SD_GRUPO4/src/DN/DNServer.js",
-		"startReverseProxy": "node src/RP/ReverseProxy.js",
-		"start": "npm run startReverseProxy && npm run startNodes",
+		"start": "forever src/RP/ReverseProxy.js",
 		"stop": "forever stopall",
 		"restart": "npm run stop && npm run start"
 	}
