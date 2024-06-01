@@ -105,3 +105,8 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-01 15:35:29"}
 {"level":"error","message":"Error starting node servers: errorLogs is not defined","timestamp":"2024-06-01 19:17:47"}
 {"level":"error","message":"Error starting node servers: errorLogs is not defined","timestamp":"2024-06-01 19:17:58"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-01 21:24:14"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-01 21:24:23"}
+{"level":"error","message":"EDB003 | Key not found","timestamp":"2024-06-01 21:24:41"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-01 21:25:16"}
+{"level":"error","message":"EDB004 | Key not found","timestamp":"2024-06-01 21:25:19"}

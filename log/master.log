@@ -29,3 +29,4 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"info","message":{"currentTerm":14,"id":7,"log":null,"name":"N2s1","port":3210,"state":"Leader","votedFor":8,"votesReceived":6},"timestamp":"2024-05-31 14:31:45"}
 {"level":"info","message":{"currentTerm":29,"id":7,"log":null,"name":"N2s1","port":3210,"state":"Leader","votedFor":6,"votesReceived":10},"timestamp":"2024-05-31 14:32:15"}
 {"level":"info","message":{"currentTerm":14,"id":4,"log":null,"name":"N1s1","port":3110,"state":"Leader","votedFor":8,"votesReceived":4},"timestamp":"2024-06-01 14:18:17"}
+{"level":"info","message":{"currentTerm":28,"id":2,"log":null,"name":"N0s2","port":3020,"state":"Leader","votedFor":13,"votesReceived":6},"timestamp":"2024-06-01 21:22:41"}
