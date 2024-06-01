@@ -83,11 +83,5 @@ class DataBase {
 		}
 	}
 }
-/*
-const db = new DataBase();
-let name = { name: "Ricardo", phone: "1230" };
-console.log(db.create("1", name));
-db.create("1", name);
-console.log(db.read("1"));
-*/
+
 module.exports = DataBase;

@@ -45,7 +45,7 @@ This project is a Node.js application for a distributed database system called u
 
 ### Create a key-value pair
 
-curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"2\", \"value\":{\"name\":\"example\", \"phone\":\"123123\", \"email\":\"example@exmail.com\"}}" http:/ localhost:3110/db/c
+curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"3\", \"value\":{\"Name\":\"example\", \"Phone\":\"123123\", \"Email\":\"example@exmail.com\"}}" http:/ localhost:3020/db/c
 
 ### Get a key-value pair
 
@@ -53,8 +53,8 @@ curl -X GET http://localhost:3010/db/r?key=2
 
 ### Update a key-value pair
 
-curl -X PUT \ -H "Content-Type: application/json" \ -d "{\"key\":\"1\", \"value\":{\"name\":\"Updated Name\", \"phone\":\"12345\", \"email\":\"updated@example.com\"}}" \ http:/ localhost:3110/db/u
+curl -X PUT \ -H "Content-Type: application/json" \ -d "{\"key\":\"5\", \"value\":{\"Name\":\"Updated Name\", \"Phone\":\"12345\", \"Email\":\"updated@example.com\"}}" \ http:/ localhost:3020/db/u
 
 ### Delete a key-value pair
 
-curl -X DELETE \ -H "Content-Type: application/json" \ -d "{\"key\":\"1\"}" \ http://localhost:3210/db/d
+curl -X DELETE \ -H "Content-Type: application/json" \ -d "{\"key\":\"1\"}" \ http://localhost:3020/db/d

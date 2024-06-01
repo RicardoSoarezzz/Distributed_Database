@@ -24,6 +24,9 @@ let masterPort = null;
 
 const db = new DataBase();
 
+let v1 = { Name: "Ricardo", Phone: "+351 91", Email: "ricardo@email.com" };
+db.create("1", v1);
+
 // Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
 	if (req.socket.localPort === masterPort) {
