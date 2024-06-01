@@ -39,7 +39,6 @@ This project is a Node.js application for a distributed database system called u
 
 - `/election`: Exchange information to establish the master of the DN.
 - `/maintenance`: Exchange data to synchronize all data correctly in each DN server.
-- `/any-other-needed`: Perform any specific action not associated with the pre-defined routes.
 
 ## key-value pair:
 

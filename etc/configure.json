@@ -27,6 +27,12 @@
 					"host": "localhost",
 					"port": 3020,
 					"name": "N0s2"
+				},
+				{
+					"id": 3,
+					"host": "localhost",
+					"port": 3030,
+					"name": "N0s3"
 				}
 			]
 		},
@@ -35,22 +41,28 @@
 			"master_id": 0,
 			"servers": [
 				{
-					"id": 3,
+					"id": 4,
 					"host": "localhost",
 					"port": 3100,
 					"name": "N1s0"
 				},
 				{
-					"id": 4,
+					"id": 5,
 					"host": "localhost",
 					"port": 3110,
 					"name": "N1s1"
 				},
 				{
-					"id": 5,
+					"id": 6,
 					"host": "localhost",
 					"port": 3120,
 					"name": "N1s2"
+				},
+				{
+					"id": 7,
+					"host": "localhost",
+					"port": 3130,
+					"name": "N1s3"
 				}
 			]
 		},
@@ -59,22 +71,58 @@
 			"master_id": 0,
 			"servers": [
 				{
-					"id": 6,
+					"id": 8,
 					"host": "localhost",
 					"port": 3200,
 					"name": "N2s0"
 				},
 				{
-					"id": 7,
+					"id": 9,
 					"host": "localhost",
 					"port": 3210,
 					"name": "N2s1"
 				},
 				{
-					"id": 8,
+					"id": 10,
 					"host": "localhost",
 					"port": 3220,
 					"name": "N2s2"
+				},
+				{
+					"id": 11,
+					"host": "localhost",
+					"port": 3230,
+					"name": "N2s3"
+				}
+			]
+		},
+		{
+			"name": "DN03",
+			"master_id": 0,
+			"servers": [
+				{
+					"id": 10,
+					"host": "localhost",
+					"port": 3300,
+					"name": "N3s0"
+				},
+				{
+					"id": 11,
+					"host": "localhost",
+					"port": 3310,
+					"name": "N3s1"
+				},
+				{
+					"id": 12,
+					"host": "localhost",
+					"port": 3320,
+					"name": "N3s2"
+				},
+				{
+					"id": 13,
+					"host": "localhost",
+					"port": 3330,
+					"name": "N3s3"
 				}
 			]
 		}
