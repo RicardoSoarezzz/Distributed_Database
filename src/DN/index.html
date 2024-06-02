@@ -16,19 +16,14 @@
 				<option value="update">Update</option>
 				<option value="delete">Delete</option>
 			</select>
-			<br />
+			<br /><br />
 			<label for="key">Key:</label>
 			<input type="text" id="key" name="key" />
 			<br />
+			<br />
 			<label for="name">Name:</label>
 			<input type="text" id="name" name="name" />
-			<br />
-			<label for="phone">Phone:</label>
-			<input type="text" id="phone" name="phone" />
-			<br />
-			<label for="email">Email:</label>
-			<input type="text" id="email" name="email" />
-			<br />
+
 			<button type="submit">Submit</button>
 		</form>
 
@@ -47,10 +42,9 @@
 
 				let value = {};
 				if (action === "create" || action === "update") {
-					const name = form.name.value;
-					const phone = form.phone.value;
-					const email = form.email.value;
-					value = { Name: name, Phone: phone, Email: email };
+					// Convert name to string explicitly
+					const name = String(form.name.value);
+					value = { Name: name }; // Assuming the database expects the value in this format
 				}
 
 				try {

@@ -140,3 +140,8 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 12:03:34"}
 {"level":"error","message":"EDB004 | Key not found","timestamp":"2024-06-02 12:04:46"}
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 12:04:52"}
+{"level":"error","message":"Cannot set headers after they are sent to the client","timestamp":"2024-06-02 15:26:16"}
+{"level":"error","message":"Invalid status code: { status: 'OK', uptime: 5, masterNode: [Server] }","timestamp":"2024-06-02 15:26:47"}
+{"level":"error","message":"Invalid status code: { status: 'OK', uptime: 1, masterNode: [Server] }","timestamp":"2024-06-02 15:27:58"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2024-06-02 15:28:36"}
+{"level":"error","message":"Assignment to constant variable.","timestamp":"2024-06-02 15:28:37"}

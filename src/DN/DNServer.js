@@ -10,20 +10,25 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 2000;
 const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
+const dbPath = "C:/Users/geral/SD_GRUPO4/DB-data"; // Corrected path
 const systemLog = new SystemLog(logFilePath);
-const db = new DataBase();
+const db = new DataBase(dbPath); // Pass the dbPath to the constructor
 
+let isMaster = false;
 master = null;
 
-let v1 = { Name: "Ricardo", Phone: "+351 91", Email: "ricardo@email.com" };
-db.create("1", v1);
-
-// Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
 	next();
+	/*
+	if (isMaster) {
+		next();
+	} else {
+		res
+			.status(403)
+			.json({ error: "Only the master can perform this operation" });
+	}*/
 };
 
-// Common endpoints
 app.get("/status", (req, res) => {
 	res.json({ status: "DN is running", master: isMaster });
 });
@@ -39,26 +44,20 @@ app.get("/stats", (req, res) => {
 
 app.post("/admin/loglevel", (req, res) => {
 	const newLogLevel = req.body.level;
-	systemLog.info(newLogLevel);
-	res.json({ loglevel: newLogLevel });
-});
-
-app.post("/admin/loglevel", (req, res) => {
-	const level = req.body.level;
-	logger.level = level;
+	logger.level = newLogLevel;
 	res.json({ loglevel: logger.level });
 });
 
-// DB endpoints with middleware to check if the server is master
 app.post("/db/c", checkIfMaster, (req, res) => {
-	const { key, value } = req.body;
-	const result = db.create(key, value);
+	const { key, Name } = req.body;
+	//console.log(req.body);
+	const result = db.create(key, Name);
 	res.json(result);
 });
 
 app.put("/db/u", checkIfMaster, (req, res) => {
-	const { key, value } = req.body;
-	const result = db.update(key, value);
+	const { key, Name } = req.body;
+	const result = db.update(key, Name);
 	res.json(result);
 });
 
@@ -79,7 +78,6 @@ app.get("/stop", (req, res) => {
 	process.exit(0);
 });
 
-// DN-specific endpoints
 app.post("/election", (req, res) => {
 	const cfg = callcfg();
 	const master = electMaster(cfg);
@@ -90,16 +88,46 @@ app.post("/election", (req, res) => {
 });
 
 app.post("/maintenance", (req, res) => {
+	const datanodes = fs.readdirSync(dbPath).filter((dn) => dn.startsWith("dn"));
+
+	datanodes.forEach((dn) => {
+		const servers = fs
+			.readdirSync(path.join(dbPath, dn))
+			.filter((s) => s.startsWith("s"));
+
+		const firstServerData = {};
+		servers.forEach((server) => {
+			const serverKeys = fs.readdirSync(path.join(dbPath, dn, server));
+			serverKeys.forEach((key) => {
+				const value = fs.readFileSync(
+					path.join(dbPath, dn, server, key),
+					"utf-8"
+				);
+				if (!firstServerData[key]) {
+					firstServerData[key] = value;
+				}
+			});
+		});
+
+		servers.forEach((server) => {
+			const serverKeys = fs.readdirSync(path.join(dbPath, dn, server));
+			Object.keys(firstServerData).forEach((key) => {
+				if (!serverKeys.includes(key)) {
+					fs.writeFileSync(
+						path.join(dbPath, dn, server, key),
+						firstServerData[key]
+					);
+				}
+			});
+		});
+	});
+
 	res.json({ message: "Maintenance data synchronized" });
 });
 
-// Start the server
 app.listen(PORT, () => {
 	systemLog.addEntry(`DN server started on port ${PORT}`);
 	console.log(`DN server started on port ${PORT}`);
-
-	console.log(master);
-	startNodeServers();
 });
 
 // Interface routes
@@ -109,21 +137,21 @@ app.get("/", (req, res) => {
 
 // Interface route for handling form submission
 app.post("/submit", async (req, res) => {
-	const { action, key, Name, Phone, Email } = req.body;
-	const value = { Name, Phone, Email };
+	const { action, key, Name } = req.body;
+
 	try {
 		let response;
 		if (action === "create") {
 			response = await axios.post(`http://localhost:${PORT}/db/c`, {
 				key,
-				value,
+				Name,
 			});
 		} else if (action === "read") {
 			response = await axios.get(`http://localhost:${PORT}/db/r?key=${key}`);
 		} else if (action === "update") {
 			response = await axios.put(`http://localhost:${PORT}/db/u`, {
 				key,
-				value,
+				Name,
 			});
 		} else if (action === "delete") {
 			response = await axios.delete(`http://localhost:${PORT}/db/d`, {
@@ -132,7 +160,7 @@ app.post("/submit", async (req, res) => {
 		}
 		res.json(response.data);
 	} catch (error) {
-		console.error(error);
+		//console.error(error);
 		res.status(500).json({ error: "Internal server error" });
 	}
 });

@@ -1,87 +1,104 @@
-const axios = require("axios");
-const SystemLog = require("../DN/SystemLog");
-
-const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
-const errorFilePath = "C:/Users/geral/SD_GRUPO4/log/error.log";
-
-const systemLogs = new SystemLog(logFilePath);
-const errorLogs = new SystemLog(errorFilePath);
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
 class DataBase {
-	constructor() {
-		this.data = {};
+	constructor(basePath) {
+		this.basePath = basePath;
 	}
 
-	// Create operation
+	_getFilePath(key, dn, server) {
+		return path.join(this.basePath, dn, server, key);
+	}
+
+	_getRandomElement(array) {
+		return array[Math.floor(Math.random() * array.length)];
+	}
+
+	_generateHash(key) {
+		return crypto.createHash("sha256").update(key).digest("hex");
+	}
+
 	create(key, value) {
-		if (!this.data[key]) {
-			this.data[key] = value;
-			return { data: { key, value }, error: 0 };
-		} else {
-			errorLogs.error("EDB001 | Key already exists");
-			return {
-				data: 0,
-				error: {
-					code: "EDB001",
-					errno: 1,
-					message: "Key already exists",
-				},
-			};
+		const datanodes = fs
+			.readdirSync(this.basePath)
+			.filter((dn) => dn.startsWith("dn"));
+		const selectedDn = this._getRandomElement(datanodes);
+		const servers = fs
+			.readdirSync(path.join(this.basePath, selectedDn))
+			.filter((s) => s.startsWith("s00"));
+		const selectedServer = this._getRandomElement(servers);
+		const hashKey = this._generateHash(key);
+		const filePath = this._getFilePath(hashKey, selectedDn, selectedServer);
+
+		if (fs.existsSync(filePath)) {
+			return { error: "Key already exists" };
 		}
+
+		fs.writeFileSync(filePath, value);
+		return {
+			key: hashKey,
+			value,
+			datanode: selectedDn,
+			server: selectedServer,
+		};
 	}
 
-	// Read operation
 	read(key) {
-		if (this.data[key]) {
-			return { data: { key, value: this.data[key] }, error: 0 };
-		} else {
-			errorLogs.error("EDB002 | Key not found");
-			return {
-				data: 0,
-				error: {
-					code: "EDB002",
-					errno: 2,
-					message: "Key not found",
-				},
-			};
+		const datanodes = fs
+			.readdirSync(this.basePath)
+			.filter((dn) => dn.startsWith("dn"));
+		for (let dn of datanodes) {
+			const servers = fs
+				.readdirSync(path.join(this.basePath, dn))
+				.filter((s) => s.startsWith("s00"));
+			for (let server of servers) {
+				const filePath = this._getFilePath(key, dn, server);
+				if (fs.existsSync(filePath)) {
+					const value = fs.readFileSync(filePath, "utf8");
+					return { key, value, datanode: dn, server };
+				}
+			}
 		}
+		return { error: "Key not found" };
 	}
 
-	// Update operation
-	update(key, newValue) {
-		if (this.data[key]) {
-			this.data[key] = newValue;
-			return { data: { key, value: newValue }, error: 0 };
-		} else {
-			errorLogs.error("EDB003 | Key not found");
-			return {
-				data: 0,
-				error: {
-					code: "EDB003",
-					errno: 3,
-					message: "Key not found",
-				},
-			};
+	update(key, value) {
+		const datanodes = fs
+			.readdirSync(this.basePath)
+			.filter((dn) => dn.startsWith("dn"));
+		for (let dn of datanodes) {
+			const servers = fs
+				.readdirSync(path.join(this.basePath, dn))
+				.filter((s) => s.startsWith("s00"));
+			for (let server of servers) {
+				const filePath = this._getFilePath(key, dn, server);
+				if (fs.existsSync(filePath)) {
+					fs.writeFileSync(filePath, value);
+					return { key, value, datanode: dn, server };
+				}
+			}
 		}
+		return { error: "Key not found" };
 	}
 
-	// Delete operation
 	delete(key) {
-		if (this.data[key]) {
-			delete this.data[key];
-
-			return { data: { key }, error: 0 };
-		} else {
-			errorLogs.error("EDB004 | Key not found");
-			return {
-				data: 0,
-				error: {
-					code: "EDB004",
-					errno: 4,
-					message: "Key not found",
-				},
-			};
+		const datanodes = fs
+			.readdirSync(this.basePath)
+			.filter((dn) => dn.startsWith("dn"));
+		for (let dn of datanodes) {
+			const servers = fs
+				.readdirSync(path.join(this.basePath, dn))
+				.filter((s) => s.startsWith("s00"));
+			for (let server of servers) {
+				const filePath = this._getFilePath(key, dn, server);
+				if (fs.existsSync(filePath)) {
+					fs.unlinkSync(filePath);
+					return { message: "Key deleted", datanode: dn, server };
+				}
+			}
 		}
+		return { error: "Key not found" };
 	}
 }
 

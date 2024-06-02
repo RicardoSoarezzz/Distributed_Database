@@ -1,32 +1,29 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require("path");
-const { exec } = require("child_process");
-const systemLoger = require("../DN/SystemLog");
+const { callcfg, electMaster, getStatus } = require("./myUtils");
+//const DN = require("../DN/DNServer.js");
+const SystemLog = require("../DN/SystemLog");
 const DataBase = require("../NM/DataBase.js");
-const { callcfg, electMaster, getStatus } = require("../RP/myUtils");
 const DN = require("../DN/DNServer.js");
 
 const app = express();
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 4000;
-
 const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
 const errorFilePath = "C:/Users/geral/SD_GRUPO4/log/error.log";
 const masterFilePath = "C:/Users/geral/SD_GRUPO4/log/master.log";
-
-const systemLogs = new systemLoger(logFilePath);
-const errorLogs = new systemLoger(errorFilePath);
-const masterLogs = new systemLoger(masterFilePath);
+const systemLogs = new SystemLog(logFilePath);
+const errorLogs = new SystemLog(errorFilePath);
+const masterLogs = new SystemLog(masterFilePath);
 const startTime = new Date();
+
+const dbPath = "path/to/DB-data"; // Update this path to your DB-data directory
+const db = new DataBase(dbPath);
 
 let masterNode = null;
 let masterPort = null;
 
-const db = new DataBase();
-
-// Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
 	if (req.socket.localPort === masterPort) {
 		next();
@@ -37,7 +34,6 @@ const checkIfMaster = (req, res, next) => {
 	}
 };
 
-// Start the server and initialize the system
 app.listen(PORT, () => {
 	if (!masterNode) {
 		const cfg = callcfg();
@@ -46,23 +42,18 @@ app.listen(PORT, () => {
 		DN.master = masterPort;
 	}
 	console.log(`Server started on port ${PORT}`);
-	try {
-		systemLogs.info(`Server started on port ${PORT}`);
-	} catch (error) {
-		errorLogs.error(error.message);
-	}
+	systemLogs.info(`Server started on port ${PORT}`);
 });
 
-// Define a route to handle root requests
 app.get("/", (req, res) => {
 	res.send(`
         <div style="text-align: center;">
         <br><br><br>
         <h1>Node.js - Distributed DB - Grupo 4</h1>
         <p>Ricardo Soares | Miguel Moreira</p>
-        <button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/stats'">Check Status (/status)</button>
-        <button style="margin: 10px; padding: 10px 20px; background-color: #00C0A0; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/master_node'">Check Master Node (/master_node)</button>
-        <button style="margin: 10px; padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;" onclick="window.location.href='/setMaster'">Elect new Master (/setMaster)</button>
+        <button onclick="window.location.href='/stat'">Check Status (/status)</button>
+        <button onclick="window.location.href='/master_node'">Check Master Node (/master_node)</button>
+        <button onclick="window.location.href='/set_master'">Elect new Master (/setMaster)</button>
         </div>
     `);
 });
@@ -73,7 +64,7 @@ app.post("/admin/loglevel", (req, res) => {
 	res.json({ loglevel: newLogLevel });
 });
 
-app.get("/stats", async (req, res) => {
+app.get("/stat", async (req, res) => {
 	try {
 		const status = await getStatus(startTime);
 		systemLogs.info(status);
@@ -84,12 +75,11 @@ app.get("/stats", async (req, res) => {
 	}
 });
 
-// Define the route handler for /setMaster endpoint
-app.get("/setMaster", async (req, res) => {
+app.get("/set_master", async (req, res) => {
 	try {
 		const cfg = callcfg();
-		masterNode = electMaster(cfg); // Update the masterNode variable
-		masterPort = masterNode.port; // Update the masterPort variable
+		masterNode = electMaster(cfg);
+		masterPort = masterNode.port;
 		DN.master = masterPort;
 		masterLogs.info(masterNode);
 		res.json(masterNode);
@@ -99,7 +89,6 @@ app.get("/setMaster", async (req, res) => {
 	}
 });
 
-// Define the route handler for /master_node endpoint
 app.get("/master_node", (req, res) => {
 	try {
 		if (masterNode) {
@@ -113,7 +102,6 @@ app.get("/master_node", (req, res) => {
 	}
 });
 
-// DB endpoints with middleware to check if the server is master
 app.post("/db/c", checkIfMaster, (req, res) => {
 	const { key, value } = req.body;
 	const result = db.create(key, value);
@@ -139,7 +127,7 @@ app.get("/db/r", (req, res) => {
 });
 
 app.get("/stop", (req, res) => {
-	res.json({ message: "Stopping DN" });
+	res.json({ message: "Stopping Reverse Proxy" });
 	process.exit(0);
 });
 
