@@ -66,6 +66,7 @@ app.delete("/db/d", checkIfMaster, (req, res) => {
 app.get("/db/r", (req, res) => {
 	const { key } = req.query;
 	const result = db.read(key);
+
 	res.json(result);
 });
 

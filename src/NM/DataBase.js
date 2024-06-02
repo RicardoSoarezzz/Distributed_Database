@@ -56,7 +56,7 @@ class DataBase {
 				const filePath = this._getFilePath(key, dn, server);
 				if (fs.existsSync(filePath)) {
 					const value = fs.readFileSync(filePath, "utf8");
-					return { key, value, datanode: dn, server };
+					return { value: value, datanode: dn };
 				}
 			}
 		}

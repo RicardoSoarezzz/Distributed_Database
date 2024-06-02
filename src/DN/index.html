@@ -27,6 +27,10 @@
 			<button type="submit">Submit</button>
 		</form>
 
+		<br />
+		<br />
+		<br />
+
 		<div id="result"></div>
 
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -42,9 +46,8 @@
 
 				let value = {};
 				if (action === "create" || action === "update") {
-					// Convert name to string explicitly
 					const name = String(form.name.value);
-					value = { Name: name }; // Assuming the database expects the value in this format
+					value = { Name: name };
 				}
 
 				try {
