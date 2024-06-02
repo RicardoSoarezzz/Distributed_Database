@@ -18,7 +18,7 @@ const errorLogs = new SystemLog(errorFilePath);
 const masterLogs = new SystemLog(masterFilePath);
 const startTime = new Date();
 
-const dbPath = "path/to/DB-data"; // Update this path to your DB-data directory
+const dbPath = "C:/Users/geral/SD_GRUPO4/src/DN/DNServer.js";
 const db = new DataBase(dbPath);
 
 let masterNode = null;

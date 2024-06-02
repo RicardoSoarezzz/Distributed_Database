@@ -1,16 +1,18 @@
 const axios = require("axios");
 const express = require("express");
 const bodyParser = require("body-parser");
+
 const SystemLog = require("./SystemLog");
 const DataBase = require("../NM/DataBase.js");
+const dbPath = "C:/Users/geral/SD_GRUPO4/DB-data";
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
+const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 
 const app = express();
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 2000;
-const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
-const dbPath = "C:/Users/geral/SD_GRUPO4/DB-data"; // Corrected path
+
 const systemLog = new SystemLog(logFilePath);
 const db = new DataBase(dbPath); // Pass the dbPath to the constructor
 
@@ -19,14 +21,6 @@ master = null;
 
 const checkIfMaster = (req, res, next) => {
 	next();
-	/*
-	if (isMaster) {
-		next();
-	} else {
-		res
-			.status(403)
-			.json({ error: "Only the master can perform this operation" });
-	}*/
 };
 
 app.get("/status", (req, res) => {
