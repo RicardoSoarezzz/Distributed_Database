@@ -1,3 +1,4 @@
+const axios = require("axios");
 const express = require("express");
 const bodyParser = require("body-parser");
 const SystemLog = require("./SystemLog");
@@ -12,13 +13,14 @@ const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 const systemLog = new SystemLog(logFilePath);
 const db = new DataBase();
 
+master = null;
+
+let v1 = { Name: "Ricardo", Phone: "+351 91", Email: "ricardo@email.com" };
+db.create("1", v1);
+
 // Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
-	if (req.socket.localPort === masterPort) {
-		next();
-	} else {
-		res.status(403).json({ error: "Only master can perform this operation" });
-	}
+	next();
 };
 
 // Common endpoints
@@ -88,7 +90,6 @@ app.post("/election", (req, res) => {
 });
 
 app.post("/maintenance", (req, res) => {
-	// Implement maintenance logic
 	res.json({ message: "Maintenance data synchronized" });
 });
 
@@ -96,9 +97,45 @@ app.post("/maintenance", (req, res) => {
 app.listen(PORT, () => {
 	systemLog.addEntry(`DN server started on port ${PORT}`);
 	console.log(`DN server started on port ${PORT}`);
+
+	console.log(master);
+	startNodeServers();
 });
 
-module.exports = app;
+// Interface routes
+app.get("/", (req, res) => {
+	res.sendFile(__dirname + "/index.html");
+});
+
+// Interface route for handling form submission
+app.post("/submit", async (req, res) => {
+	const { action, key, Name, Phone, Email } = req.body;
+	const value = { Name, Phone, Email };
+	try {
+		let response;
+		if (action === "create") {
+			response = await axios.post(`http://localhost:${PORT}/db/c`, {
+				key,
+				value,
+			});
+		} else if (action === "read") {
+			response = await axios.get(`http://localhost:${PORT}/db/r?key=${key}`);
+		} else if (action === "update") {
+			response = await axios.put(`http://localhost:${PORT}/db/u`, {
+				key,
+				value,
+			});
+		} else if (action === "delete") {
+			response = await axios.delete(`http://localhost:${PORT}/db/d`, {
+				data: { key },
+			});
+		}
+		res.json(response.data);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
 
 // Start each node's server
 const startNodeServers = () => {
@@ -123,5 +160,4 @@ const startNodeServers = () => {
 	});
 };
 
-// Call the function to start node servers
-startNodeServers();
+module.exports = app;

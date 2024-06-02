@@ -1,3 +1,4 @@
+const axios = require("axios");
 const SystemLog = require("../DN/SystemLog");
 
 const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
@@ -50,7 +51,7 @@ class DataBase {
 	update(key, newValue) {
 		if (this.data[key]) {
 			this.data[key] = newValue;
-			return { data: { key, value: this.data[key] }, error: 0 };
+			return { data: { key, value: newValue }, error: 0 };
 		} else {
 			errorLogs.error("EDB003 | Key not found");
 			return {

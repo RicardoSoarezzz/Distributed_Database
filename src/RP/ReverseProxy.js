@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const { exec } = require("child_process");
 const systemLoger = require("../DN/SystemLog");
 const DataBase = require("../NM/DataBase.js");
 const { callcfg, electMaster, getStatus } = require("../RP/myUtils");
+const DN = require("../DN/DNServer.js");
 
 const app = express();
 app.use(bodyParser.json());
@@ -24,9 +26,6 @@ let masterPort = null;
 
 const db = new DataBase();
 
-let v1 = { Name: "Ricardo", Phone: "+351 91", Email: "ricardo@email.com" };
-db.create("1", v1);
-
 // Middleware to check if the server is master
 const checkIfMaster = (req, res, next) => {
 	if (req.socket.localPort === masterPort) {
@@ -44,6 +43,7 @@ app.listen(PORT, () => {
 		const cfg = callcfg();
 		masterNode = electMaster(cfg);
 		masterPort = masterNode.port;
+		DN.master = masterPort;
 	}
 	console.log(`Server started on port ${PORT}`);
 	try {
@@ -90,6 +90,7 @@ app.get("/setMaster", async (req, res) => {
 		const cfg = callcfg();
 		masterNode = electMaster(cfg); // Update the masterNode variable
 		masterPort = masterNode.port; // Update the masterPort variable
+		DN.master = masterPort;
 		masterLogs.info(masterNode);
 		res.json(masterNode);
 	} catch (error) {
@@ -141,31 +142,5 @@ app.get("/stop", (req, res) => {
 	res.json({ message: "Stopping DN" });
 	process.exit(0);
 });
-
-// Start each node's server
-const startNodeServers = () => {
-	const cfg = callcfg();
-	cfg.DNs.forEach((dn) => {
-		dn.servers.forEach((server) => {
-			app.use(bodyParser.json());
-			if (server.port == 3000) {
-				masterPort = server.port;
-			}
-			app.post("/maintenance", (req, res) => {
-				// Implement maintenance logic for each node server
-				res.json({ message: "Maintenance data synchronized" });
-			});
-
-			app.listen(server.port, () => {
-				console.log(
-					`Node server ${server.name} started on port ${server.port}`
-				);
-			});
-		});
-	});
-};
-
-// Call the function to start node servers
-startNodeServers();
 
 module.exports = app;

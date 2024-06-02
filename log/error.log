@@ -110,3 +110,33 @@ error: Error processing status request {"error":{},"path":"/status","timestamp":
 {"level":"error","message":"EDB003 | Key not found","timestamp":"2024-06-01 21:24:41"}
 {"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-01 21:25:16"}
 {"level":"error","message":"EDB004 | Key not found","timestamp":"2024-06-01 21:25:19"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 10:27:10"}
+{"level":"error","message":"EDB003 | Key not found","timestamp":"2024-06-02 10:28:02"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 10:28:31"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 10:28:35"}
+{"level":"error","message":"EDB004 | Key not found","timestamp":"2024-06-02 10:28:41"}
+{"level":"error","message":"EDB001 | Request failed with status code 403","timestamp":"2024-06-02 10:32:19"}
+{"level":"error","message":"EDB002 | Request failed with status code 500","timestamp":"2024-06-02 10:32:30"}
+{"level":"error","message":"EDB001 | Request failed with status code 403","timestamp":"2024-06-02 10:33:17"}
+{"level":"error","message":"EDB002 | Request failed with status code 500","timestamp":"2024-06-02 10:33:23"}
+{"level":"error","message":"EDB001 | Request failed with status code 403","timestamp":"2024-06-02 10:34:55"}
+{"level":"error","message":"EDB001 | Request failed with status code 403","timestamp":"2024-06-02 10:34:55"}
+{"level":"error","message":"EDB001 | Request failed with status code 403","timestamp":"2024-06-02 10:35:16"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 10:43:46"}
+{"level":"error","message":"Error starting DNServer: Command failed: node src/DN/DNServer.js\nnode:events:491\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EADDRINUSE: address already in use :::4000\r\n    at Server.setupListenHandle [as _listen2] (node:net:1774:16)\r\n    at listenInCluster (node:net:1822:12)\r\n    at Server.listen (node:net:1910:7)\r\n    at Function.listen (C:\\Users\\geral\\SD_GRUPO4\\node_modules\\express\\lib\\application.js:635:24)\r\n    at Object.<anonymous> (C:\\Users\\geral\\SD_GRUPO4\\src\\RP\\ReverseProxy.js:43:5)\r\n    at Module._compile (node:internal/modules/cjs/loader:1275:14)\r\n    at Module._extensions..js (node:internal/modules/cjs/loader:1329:10)\r\n    at Module.load (node:internal/modules/cjs/loader:1133:32)\r\n    at Module._load (node:internal/modules/cjs/loader:972:12)\r\n    at Module.require (node:internal/modules/cjs/loader:1157:19)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1801:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {\r\n  code: 'EADDRINUSE',\r\n  errno: -4091,\r\n  syscall: 'listen',\r\n  address: '::',\r\n  port: 4000\r\n}\r\n\r\nNode.js v19.9.0\r\n","timestamp":"2024-06-02 10:45:34"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:07:43"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:14:14"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:18:14"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:18:34"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:21:41"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:21:42"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:21:42"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:21:42"}
+{"level":"error","message":"EDB001 | Key already exists","timestamp":"2024-06-02 11:25:24"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:27:46"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:45:50"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:46:08"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 11:46:17"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 12:03:34"}
+{"level":"error","message":"EDB004 | Key not found","timestamp":"2024-06-02 12:04:46"}
+{"level":"error","message":"EDB002 | Key not found","timestamp":"2024-06-02 12:04:52"}

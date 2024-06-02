@@ -1,0 +1,70 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Database Interface</title>
+	</head>
+	<body>
+		<h1>Database Interface</h1>
+		<form id="dbForm">
+			<label for="action">Action:</label>
+			<select id="action" name="action">
+				<option value="create">Create</option>
+				<option value="read">Read</option>
+				<option value="update">Update</option>
+				<option value="delete">Delete</option>
+			</select>
+			<br />
+			<label for="key">Key:</label>
+			<input type="text" id="key" name="key" />
+			<br />
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" />
+			<br />
+			<label for="phone">Phone:</label>
+			<input type="text" id="phone" name="phone" />
+			<br />
+			<label for="email">Email:</label>
+			<input type="text" id="email" name="email" />
+			<br />
+			<button type="submit">Submit</button>
+		</form>
+
+		<div id="result"></div>
+
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script>
+			const form = document.getElementById("dbForm");
+			const resultDiv = document.getElementById("result");
+
+			form.addEventListener("submit", async function (event) {
+				event.preventDefault();
+
+				const action = form.action.value;
+				const key = form.key.value;
+
+				let value = {};
+				if (action === "create" || action === "update") {
+					const name = form.name.value;
+					const phone = form.phone.value;
+					const email = form.email.value;
+					value = { Name: name, Phone: phone, Email: email };
+				}
+
+				try {
+					const response = await axios.post("/submit", {
+						action,
+						key,
+						...value,
+					});
+					resultDiv.textContent = JSON.stringify(response.data);
+				} catch (error) {
+					console.error(error);
+					resultDiv.textContent = "Error occurred";
+				}
+			});
+		</script>
+	</body>
+</html>

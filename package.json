@@ -13,7 +13,7 @@
 		"winston": "^3.13.0"
 	},
 	"scripts": {
-		"start": "forever src/RP/ReverseProxy.js",
+		"start": "node src/RP/ReverseProxy.js",
 		"stop": "forever stopall",
 		"restart": "npm run stop && npm run start"
 	}
