@@ -1,6 +1,8 @@
 const axios = require("axios");
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const path = require("path");
 
 const SystemLog = require("./SystemLog");
 const DataBase = require("../NM/DataBase.js");
@@ -81,7 +83,7 @@ app.post("/election", (req, res) => {
 	res.json(master);
 });
 
-app.post("/maintenance", (req, res) => {
+app.get("/maintenance", (req, res) => {
 	const datanodes = fs.readdirSync(dbPath).filter((dn) => dn.startsWith("dn"));
 
 	datanodes.forEach((dn) => {
