@@ -50,7 +50,6 @@ app.get("/", (req, res) => {
         <div style="text-align: center;">
         <br><br><br>
         <h1>Node.js - Distributed DB - Grupo 4</h1>
-        <p>Ricardo Soares | Miguel Moreira</p>
         <button onclick="window.location.href='/stat'">Check Status (/status)</button>
         <button onclick="window.location.href='/master_node'">Check Master Node (/master_node)</button>
         <button onclick="window.location.href='/set_master'">Elect new Master (/setMaster)</button>
