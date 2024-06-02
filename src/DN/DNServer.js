@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 2000;
 
 const systemLog = new SystemLog(logFilePath);
-const db = new DataBase(dbPath); // Pass the dbPath to the constructor
+const db = new DataBase(dbPath);
 
 let isMaster = false;
 master = null;
@@ -167,16 +167,14 @@ const startNodeServers = () => {
 	const cfg = callcfg();
 	cfg.DNs.forEach((dn) => {
 		dn.servers.forEach((server) => {
-			app.use(bodyParser.json());
-			if (server.port == 3000) {
-				masterPort = server.port;
-			}
-			app.post("/maintenance", (req, res) => {
+			const nodeApp = express();
+			nodeApp.use(bodyParser.json());
+			nodeApp.post("/maintenance", (req, res) => {
 				// Implement maintenance logic for each node server
 				res.json({ message: "Maintenance data synchronized" });
 			});
 
-			app.listen(server.port, () => {
+			nodeApp.listen(server.port, () => {
 				console.log(
 					`Node server ${server.name} started on port ${server.port}`
 				);
@@ -184,5 +182,8 @@ const startNodeServers = () => {
 		});
 	});
 };
+
+// Call the function to start node servers
+startNodeServers();
 
 module.exports = app;
