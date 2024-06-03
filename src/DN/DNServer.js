@@ -10,7 +10,11 @@ const dbPath = "C:/Users/geral/SD_GRUPO4/DB-data";
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
 const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 
+const stopRoute = require("./routes/stop.js");
+const statsRoute = require("./routes/stats.js");
 const app = express();
+app.use("/stop", stopRoute);
+app.use("/stats", statsRoute);
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 2000;
@@ -26,7 +30,13 @@ const checkIfMaster = (req, res, next) => {
 };
 
 app.get("/status", (req, res) => {
-	res.json({ status: "DN is running", master: isMaster });
+	const stats = {
+		uptime: process.uptime(),
+		message: "DN stats",
+		timestamp: Date.now(),
+		configure: callcfg(),
+	};
+	res.json(stats);
 });
 
 app.get("/stats", (req, res) => {
@@ -48,31 +58,49 @@ app.post("/db/c", checkIfMaster, (req, res) => {
 	const { key, Name } = req.body;
 	//console.log(req.body);
 	const result = db.create(key, Name);
-	res.json(result);
+	if (result != null) {
+		systemLog.info(`Created value for key: ${key}`);
+		res.json(result);
+	} else {
+		systemLog.error(`Erro creating value for key: ${key}`);
+		res.status(404).send("Key not found");
+	}
 });
 
 app.put("/db/u", checkIfMaster, (req, res) => {
 	const { key, Name } = req.body;
 	const result = db.update(key, Name);
-	res.json(result);
+	if (result != null) {
+		systemLog.info(`Updated value for key: ${key}`);
+		res.json(result);
+	} else {
+		systemLog.error(`Erro updating value for key: ${key}`);
+		res.status(404).send("Key not found");
+	}
 });
 
 app.delete("/db/d", checkIfMaster, (req, res) => {
 	const { key } = req.body;
 	const result = db.delete(key);
-	res.json(result);
+	if (result != null) {
+		systemLog.info(`Deleted value for key: ${key}`);
+		res.json(result);
+	} else {
+		systemLog.error(`Erro deleting value for key: ${key}`);
+		res.status(404).send("Key not found");
+	}
 });
 
 app.get("/db/r", (req, res) => {
 	const { key } = req.query;
 	const result = db.read(key);
-
-	res.json(result);
-});
-
-app.get("/stop", (req, res) => {
-	res.json({ message: "Stopping DN" });
-	process.exit(0);
+	if (result != null) {
+		systemLog.info(`Read value for key: ${key}`);
+		res.json(result);
+	} else {
+		systemLog.error(`Erro reading value for key: ${key}`);
+		res.status(404).send("Key not found");
+	}
 });
 
 app.post("/election", (req, res) => {
@@ -118,7 +146,7 @@ app.get("/maintenance", (req, res) => {
 			});
 		});
 	});
-
+	systemLog.info(`Maintenance done!`);
 	res.json({ message: "Maintenance data synchronized" });
 });
 

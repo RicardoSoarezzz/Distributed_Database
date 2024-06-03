@@ -9,7 +9,6 @@ class SystemLog {
 	 * @param {string} logFilePath - Path to the log file.
 	 */
 	constructor(logFilePath) {
-		// Initialize Winston logger
 		this.logger = winston.createLogger({
 			format: winston.format.combine(
 				winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
@@ -39,7 +38,6 @@ class SystemLog {
 		this.logger.log({ level, message });
 	}
 
-	// Convenience methods for different log levels
 	info(message) {
 		this.addEntry(message, "info");
 	}
