@@ -8,15 +8,17 @@ const SystemLog = require("./SystemLog");
 const DataBase = require("../NM/DataBase.js");
 const dbPath = "C:/Users/geral/SD_GRUPO4/DB-data";
 const { callcfg, electMaster, logger } = require("../RP/myUtils");
+const { updateStats, getStats } = require("../RP/stats.js");
+const { allServers } = require("../RP/Raft.js");
+
 const logFilePath = `C:/Users/geral/SD_GRUPO4/log/combined.log`;
 
 const stopRoute = require("./routes/stop.js");
 const statsRoute = require("./routes/stats.js");
 const app = express();
-app.use("/stop", stopRoute);
-app.use("/stats", statsRoute);
-app.use(bodyParser.json());
 
+app.use(bodyParser.json());
+app.use("/stats", statsRoute);
 const PORT = process.env.PORT || 2000;
 
 const systemLog = new SystemLog(logFilePath);
@@ -34,7 +36,7 @@ app.get("/status", (req, res) => {
 		uptime: process.uptime(),
 		message: "DN stats",
 		timestamp: Date.now(),
-		configure: callcfg(),
+		allServers,
 	};
 	res.json(stats);
 });
@@ -60,6 +62,7 @@ app.post("/db/c", checkIfMaster, (req, res) => {
 	const result = db.create(key, Name);
 	if (result != null) {
 		systemLog.info(`Created value for key: ${key}`);
+		updateStats("create");
 		res.json(result);
 	} else {
 		systemLog.error(`Erro creating value for key: ${key}`);
@@ -72,6 +75,7 @@ app.put("/db/u", checkIfMaster, (req, res) => {
 	const result = db.update(key, Name);
 	if (result != null) {
 		systemLog.info(`Updated value for key: ${key}`);
+		updateStats("update");
 		res.json(result);
 	} else {
 		systemLog.error(`Erro updating value for key: ${key}`);
@@ -84,6 +88,7 @@ app.delete("/db/d", checkIfMaster, (req, res) => {
 	const result = db.delete(key);
 	if (result != null) {
 		systemLog.info(`Deleted value for key: ${key}`);
+		updateStats("delete");
 		res.json(result);
 	} else {
 		systemLog.error(`Erro deleting value for key: ${key}`);
@@ -96,6 +101,7 @@ app.get("/db/r", (req, res) => {
 	const result = db.read(key);
 	if (result != null) {
 		systemLog.info(`Read value for key: ${key}`);
+		updateStats("read");
 		res.json(result);
 	} else {
 		systemLog.error(`Erro reading value for key: ${key}`);
@@ -197,11 +203,7 @@ const startNodeServers = () => {
 		dn.servers.forEach((server) => {
 			const nodeApp = express();
 			nodeApp.use(bodyParser.json());
-			nodeApp.post("/maintenance", (req, res) => {
-				// Implement maintenance logic for each node server
-				res.json({ message: "Maintenance data synchronized" });
-			});
-
+			nodeApp.use("/stop", stopRoute);
 			nodeApp.listen(server.port, () => {
 				console.log(
 					`Node server ${server.name} started on port ${server.port}`
@@ -211,7 +213,6 @@ const startNodeServers = () => {
 	});
 };
 
-// Call the function to start node servers
 startNodeServers();
 
 module.exports = app;

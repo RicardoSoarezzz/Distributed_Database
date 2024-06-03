@@ -9,6 +9,7 @@ const STATES = {
 const logFilePath = "C:/Users/geral/SD_GRUPO4/log/server.log";
 const logs = new systemLoger(logFilePath);
 
+const allServers = {};
 class Server {
 	constructor(name, id, port) {
 		this.name = name;
@@ -19,6 +20,8 @@ class Server {
 		this.votesReceived = 0;
 		this.log = null;
 		this.port = port;
+
+		allServers[id] = this;
 	}
 
 	startElection() {
@@ -112,4 +115,5 @@ function electMaster(cfg) {
 
 module.exports = {
 	electMaster,
+	allServers,
 };
