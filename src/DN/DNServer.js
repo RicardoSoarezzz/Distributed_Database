@@ -209,6 +209,9 @@ const startNodeServers = () => {
 					`Node server ${server.name} started on port ${server.port}`
 				);
 			});
+			nodeApp.get("/", (req, res) => {
+				res.send(`${server.port} is running`);
+			});
 		});
 	});
 };

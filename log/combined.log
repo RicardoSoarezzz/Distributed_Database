@@ -14,3 +14,25 @@
 {"level":"info","message":"Read value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-03 18:46:21"}
 {"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-03 18:47:58"}
 {"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-03 18:51:55"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-04 14:03:30"}
+{"level":"info","message":"Created value for key: 1","timestamp":"2024-06-04 14:04:47"}
+{"level":"info","message":"Read value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-04 14:05:16"}
+{"level":"info","message":"Updated value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-04 14:05:45"}
+{"level":"info","message":"Deleted value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-04 14:06:04"}
+{"level":"info","message":"Maintenance done!","timestamp":"2024-06-04 14:06:17"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-04 14:07:05"}
+{"level":"info","message":"Read value for key: 2","timestamp":"2024-06-04 14:07:36"}
+{"level":"info","message":"Created value for key: 2","timestamp":"2024-06-04 14:07:38"}
+{"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:07:42"}
+{"level":"info","message":"Read value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:45"}
+{"level":"info","message":"Read value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:46"}
+{"level":"info","message":"Read value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:47"}
+{"level":"info","message":"Read value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:47"}
+{"level":"info","message":"Read value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:47"}
+{"level":"info","message":"Updated value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:54"}
+{"level":"info","message":"Updated value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:56"}
+{"level":"info","message":"Updated value for key: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce","timestamp":"2024-06-04 14:07:59"}
+{"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:08:24"}
+{"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:08:25"}
+{"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:08:26"}
+{"level":"info","message":"Deleted value for key: 3","timestamp":"2024-06-04 14:08:33"}
