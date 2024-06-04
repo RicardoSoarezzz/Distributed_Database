@@ -36,3 +36,12 @@
 {"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:08:25"}
 {"level":"info","message":"Created value for key: 3","timestamp":"2024-06-04 14:08:26"}
 {"level":"info","message":"Deleted value for key: 3","timestamp":"2024-06-04 14:08:33"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-04 15:34:17"}
+{"level":"info","message":"Created value for key: 1","timestamp":"2024-06-04 15:34:43"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-04 15:36:42"}
+{"level":"info","message":"Created value for key: 2","timestamp":"2024-06-04 15:41:07"}
+{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-04 15:41:49"}
+{"level":"info","message":"Updated value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-04 15:41:58"}
+{"level":"info","message":"Deleted value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-04 15:42:02"}
+{"level":"info","message":"Created value for key: 1","timestamp":"2024-06-04 15:42:15"}
+{"level":"info","message":"Read value for key: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","timestamp":"2024-06-04 15:42:30"}

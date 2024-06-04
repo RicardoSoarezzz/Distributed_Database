@@ -7,13 +7,15 @@
 		"axios": "^1.6.8",
 		"express": "^4.19.2",
 		"forever": "^4.0.3",
+		"forever-monitor": "^3.0.3",
 		"fs": "^0.0.1-security",
 		"request": "^2.88.2",
 		"uuid": "^9.0.1",
 		"winston": "^3.13.0"
 	},
 	"scripts": {
-		"start": "node src/RP/ReverseProxy.js",
+		"startWithNode": "node src/RP/ReverseProxy.js",
+		"start": "forever start src/RP/ReverseProxy.js",
 		"stop": "forever stopall",
 		"restart": "npm run stop && npm run start"
 	}
