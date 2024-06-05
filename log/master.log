@@ -1,1 +1,2 @@
 {"level":"info","message":{"currentTerm":27,"id":5,"log":null,"name":"N1s1","port":3110,"state":"Leader","votedFor":13,"votesReceived":4},"timestamp":"2024-06-03 18:48:11"}
+{"level":"info","message":{"currentTerm":29,"id":12,"log":null,"name":"N3s2","port":3320,"state":"Leader","votedFor":13,"votesReceived":11},"timestamp":"2024-06-05 10:48:21"}
