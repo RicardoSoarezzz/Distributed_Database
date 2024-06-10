@@ -1,7 +1,0 @@
-{"level":"info","message":"DN server started on port 2000","timestamp":"2024-06-10 19:38:26"}
-{"level":"info","message":"Read value for key: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b","timestamp":"2024-06-10 19:40:02"}
-{"level":"info","message":"Created value for key: 1","timestamp":"2024-06-10 19:40:11"}
-{"level":"info","message":"Created value for key: 2","timestamp":"2024-06-10 19:40:29"}
-{"level":"info","message":"Updated value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-10 19:41:00"}
-{"level":"info","message":"Deleted value for key: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35","timestamp":"2024-06-10 19:41:06"}
-{"level":"info","message":"Maintenance done!","timestamp":"2024-06-10 19:41:35"}
